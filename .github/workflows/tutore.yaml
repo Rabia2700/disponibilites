@@ -37,6 +37,18 @@ jobs:
           token: '${{ secrets.PERSONAL_GITHUB_TOKEN }}'
           environment-url: ${{ vars.MY_APP }}
           environment: production  
+
+    - name: Deploy using ssh
+      env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+      with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          port: 22
+          script: |
+           run
     
 
 # # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -62,14 +74,4 @@ jobs:
     #       environment-url: ${{ vars.MY_APP }}
     #       environment: production
 
-    #  - name: Deploy using ssh
-    #    env:
-    #       GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
-    #    with:
-    #       host: ${{ secrets.VPS_IP }}
-    #       username: ${{ secrets.VPS_USERNAME }}
-    #       key: ${{ secrets.SSH_PRIVATE_KEY }}
-    #       passphrase: ${{ secrets.SSH_PASSPHRASE }}
-    #       port: 22
-    #       script: |
-    #         mvn compile
+    
